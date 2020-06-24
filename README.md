@@ -1,11 +1,49 @@
-# AgDH_database_functions
+# AgDH_DairyBrainUtils
 
+## About
+AgDH_DairyBrainUtils is a PyPI package with some basic functionalities for interacting with a database along with some other Dairy-Brain-specific utilities.
+
+## Usage
+To install the package, do:
+
+`pip3 install -i https://test.pypi.org/simple/ DairyBrainUtilities-ruipeterpan==0.0.4`
+
+Once installed, we recommend you to import the package with `import DairyBrainUtils as dbu`.
+
+A list of functions that are available for use are:
+
+* create_table_if_doesnt_exist(db_engine, table_name, sql_statement)
+* create_table(db_engine, table_name, sql_statement)
+* populate_table_from_csv(table_name, csv_location, db_engine)
+* execute_statement(statement, db_engine)
+* drop_table(table_name, db_engine)
+* has_table(table_name, db_engine)
+* create_schema(db_engine, schema_name)
+
+
+## Development
 See [this](https://packaging.python.org/tutorials/packaging-projects/) tutorial for guidance on packaging a Python project and uploading it to the PyPI (Python Package Index).
 [This](https://github.com/pypa/sampleproject) is a sample project with the best format.
 
-For the /dist directory, the tar.gz file is a source archive whereas the .whl file is a built distribution. Newer pip versions preferentially install built distributions, but will fall back to source archives if needed. You should always upload a source archive and provide built archives for the platforms your project is compatible with. In this case, our example package is compatible with Python on any platform so only one built distribution is needed.
 
-## About
-AgDH_database_functions is a PyPI package with some basic functionalities for interacting with a database along with some other Dairy-Brain-specific functionalities.
+To publish a new version of the package, edit `./DairyBrainUtils/__init__.py`, change the version number in `setup.py`, and publish the distribution archives following the tutorial.
 
-## Placeholder for an actual README
+More specifically, do:
+
+```
+python3 -m pip install --upgrade setuptools wheel
+python3 setup.py sdist bdist_wheel
+```
+Now, a `dist` directory should be created with two files. If the package is to be hosted on a local server, just take the `.whl` file and use `pip` to [install](https://stackoverflow.com/questions/27885397/how-do-i-install-a-python-package-with-a-whl-file) the package. 
+
+For uploading the distribution packages to TestPyPI, do:
+```
+python3 -m pip install --upgrade twine
+python3 -m twine upload --repository testpypi dist/*
+```
+
+Use `__token__` when prompted to enter the username. For the password, use the token value, including the `pypi-` prefix.
+
+
+
+

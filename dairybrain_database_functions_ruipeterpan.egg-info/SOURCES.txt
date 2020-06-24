@@ -1,8 +1,0 @@
-README.md
-setup.py
-dairybrain-database-functions/__init__.py
-dairybrain-database-functions/dairybrain-database-functions.py
-dairybrain_database_functions_ruipeterpan.egg-info/PKG-INFO
-dairybrain_database_functions_ruipeterpan.egg-info/SOURCES.txt
-dairybrain_database_functions_ruipeterpan.egg-info/dependency_links.txt
-dairybrain_database_functions_ruipeterpan.egg-info/top_level.txt
