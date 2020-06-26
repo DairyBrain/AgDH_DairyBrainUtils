@@ -18,7 +18,7 @@ To install the latest version of the package, use the command in [TestPyPI](http
 
 If the above link is broken, try:
 
-`pip3 install -i https://test.pypi.org/simple/ DairyBrainUtilities-ruipeterpan==0.1.0`
+`pip3 install -i https://test.pypi.org/simple/ DairyBrainUtilities-ruipeterpan==0.1.1`
 
 Once installed, we recommend you to import the package with `import DairyBrainUtils as dbu`.
 
@@ -48,30 +48,35 @@ credentials into [sqlalchemy.create_engine()](https://kite.com/python/docs/sqlal
 * `db_name`: String. A database name.
 * `log`: Boolean. If True, the engine will log all statements as well as a repr() of their parameter lists to the engines logger, which defaults to sys.stdout.
 
-####`create_table_if_doesnt_exist(db_engine, table_name, sql_statement)`
+####create_table_if_doesnt_exist(db_engine, table_name, sql_statement)
 Creates a table with `table_name` in the database if a table with the given name doesn't exist.
 
 `sql_statement` is a `CREATE TABLE` statement that specifies the headers of the table to be created.
 
-####`create_table(db_engine, table_name, sql_statement)`
+####create_table(db_engine, table_name, sql_statement)
 
 Creates a table with table_name in the database.
 
 `sql_statement` is a `CREATE TABLE` statement that specifies the headers of the table to be created.
 
-####`populate_table_from_csv(table_name, csv_location, db_engine)`
+####populate_table_from_csv(table_name, csv_location, db_engine)
+
 Takes in a `csv_location`, the file path of a csv file, and populates the table with the given `table_name` (assuming one exists) in the specified database.
 
-####`execute_statement(statement, db_engine)`
+####execute_statement(statement, db_engine)
+
 Executes a SQL statement in the specified database.
 
-####`drop_table(table_name, db_engine)`
+####drop_table(table_name, db_engine)
+
 Drops a table with `table_name` in the specified database.
 
-####`has_table(table_name, db_engine)`
+####has_table(table_name, db_engine)
+
 Returns `True` if there exists a table with the given `table_name` in the specified database, returns `False` otherwise
 
-####`create_schema(db_engine, schema_name)`
+####create_schema(db_engine, schema_name)
+
 Creates a schema with the given `schema_name` in the specified database.
 
 

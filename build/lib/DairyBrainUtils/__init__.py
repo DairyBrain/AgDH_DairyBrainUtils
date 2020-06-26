@@ -14,18 +14,18 @@ def get_engine(credentials):
     """
     try:
         db_engine = create_engine(
-            credentials.dialect
+            credentials["dialect"]
             + "://"
-            + credentials.user
+            + credentials["user"]
             + ":"
-            + credentials.password
+            + credentials["password"]
             + "@"
-            + credentials.host
+            + credentials["host"]
             + ":"
-            + credentials.port
+            + credentials["port"]
             + "/"
-            + credentials.db_name,
-            echo=credentials.log,
+            + credentials["db_name"],
+            echo=credentials["log"],
         )
     except:
         logger.error("Can't connect to database: " + str(sys.exc_info()))
