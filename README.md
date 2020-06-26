@@ -12,14 +12,15 @@ Once installed, we recommend you to import the package with `import DairyBrainUt
 
 A list of functions that are available for use are:
 
-* create_table_if_doesnt_exist(db_engine, table_name, sql_statement)
-* create_table(db_engine, table_name, sql_statement)
-* populate_table_from_csv(table_name, csv_location, db_engine)
-* execute_statement(statement, db_engine)
-* drop_table(table_name, db_engine)
-* has_table(table_name, db_engine)
-* create_schema(db_engine, schema_name)
+* `create_table_if_doesnt_exist(db_engine, table_name, sql_statement)`
+* `create_table(db_engine, table_name, sql_statement)`
+* `populate_table_from_csv(table_name, csv_location, db_engine)`
+* `execute_statement(statement, db_engine)`
+* `drop_table(table_name, db_engine)`
+* `has_table(table_name, db_engine)`
+* `create_schema(db_engine, schema_name)`
 
+In the above signatures, `db_engine` is an engine instance created by sqlalchemy. For more info, refer to [this](https://kite.com/python/docs/sqlalchemy.create_engine) document.
 
 ## Development
 See [this](https://packaging.python.org/tutorials/packaging-projects/) tutorial for guidance on packaging a Python project and uploading it to the PyPI (Python Package Index).
