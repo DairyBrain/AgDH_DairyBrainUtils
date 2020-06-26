@@ -5,13 +5,13 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="DairyBrainUtils-ruipeterpan",
-    version="0.0.4",
+    version="0.1.0",
     author="Rui Pan",
     author_email="rpan33@wisc.edu",
     description="A set of functions that interacts with a database. It contains some basic functionalities along with some other Dairy-Brain-specific functionalities.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/DairyBrain/AgDH_DairyBrainUtilities",
+    url="https://github.com/DairyBrain/AgDH_DairyBrainUtils",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",

@@ -1,9 +1,36 @@
-import csv
 import logging
+import sys
+from sqlalchemy import create_engine
 from sqlalchemy.sql import text
-import ntpath
 
 logger = logging.getLogger(__name__)
+
+
+def get_engine(credentials):
+    """
+    Use sqlalchemy to create an engine instance for future database connection
+    :param credentials: Dictionary with the following keys: [dialect, user, password, host, port, db_name, log]
+    :return: An engine instance
+    """
+    try:
+        db_engine = create_engine(
+            credentials.dialect
+            + "://"
+            + credentials.user
+            + ":"
+            + credentials.password
+            + "@"
+            + credentials.host
+            + ":"
+            + credentials.port
+            + "/"
+            + credentials.db_name,
+            echo=credentials.log,
+        )
+    except:
+        logger.error("Can't connect to database: " + str(sys.exc_info()))
+        sys.exit(1)
+    return db_engine
 
 
 def create_table_if_doesnt_exist(db_engine, table_name, sql_statement):
@@ -55,6 +82,22 @@ def create_table(db_engine, table_name, sql_statement):
             logger.error(e.args)
             exit(1)
 
+def create_schema(db_engine, schema_name):
+    """
+    Creates a schema in the database
+    :param db_engine: Specifies the connection to the database
+    :param schema_name: Name of the schema to be created
+    :return: None
+    """
+    with db_engine.connect() as con:
+        try:
+            logger.info("Creating schema " + schema_name)
+            con.execute(text("CREATE SCHEMA IF NOT EXISTS " + schema_name + ";"))
+        except Exception as e:
+            print("The exception is " + str(e))
+            logger.error("Error creating the schema " + schema_name)
+            logger.error(e.args)
+            exit(1)
 
 def populate_table_from_csv(table_name, csv_location, db_engine):
     """
@@ -133,147 +176,7 @@ def has_table(table_name, db_engine):
     return db_engine.has_table(table_name.split('.')[1], schema=table_name.split('.')[0])
 
 
-# def check_for_fixed_file(in_filename, out_filename, filelist, type):
-#     """
-#     Checks if file passed in is already fixed. If fixed, returns the file name; otherwise, calls the respective fix
-#     function in dc_file_fix and returns the filename after the fix.
-#     :param filename: The name of the file that need to be checked
-#     :param filelist: A list of strings of the filenames of the files that need to be parsed (sorry bad engrish)
-#     :param type: Integer, specifies the type of the source file (1 for animal, 2 for active animal, 5&6 for events). A
-#     potential enhancement is to check the integer at the end of the filename instead of hard-coding it
-#     :return: Filename of the fixed file
-#     """
-#     # if this one isn't fixed
-#     if ntpath.basename(in_filename).split('.')[-1] == 'fixed':
-#         return in_filename
-#     else:
-#         # and there isn't an equivilant fixed file in the list
-#         if in_filename + ".fixed" not in filelist:
-#             # create a fixed file
-#             if type == 1 or type == 2:
-#                 return fix_animal_file(in_filename, out_filename)
-#             elif type == 5 or type == 6:
-#                 return fix_event_file(in_filename, out_filename)
-#             else:
-#                 logger.error("Bad file: File type not supported (should be animal/active_animal/event)")
-#                 exit(1)
-#         else:
-#             # it'll get to the fixed on on it's own
-#             return None
 
 
-def create_schema(db_engine, schema_name):
-    """
-    Creates a schema in the database
-    :param db_engine: Specifies the connection to the database
-    :param schema_name: Name of the schema to be created
-    :return: None
-    """
-    with db_engine.connect() as con:
-        try:
-            logger.info("Creating schema " + schema_name)
-            con.execute(text("CREATE SCHEMA IF NOT EXISTS " + schema_name + ";"))
-        except Exception as e:
-            print("The exception is " + str(e))
-            logger.error("Error creating the schema " + schema_name)
-            logger.error(e.args)
-            exit(1)
 
 
-# def fix_animal_file(in_filename, out_filename):
-#     """
-#
-#     :param in_filename:
-#     :param out_filename:
-#     :return:
-#     """
-#     with open(out_filename, "w+") as out_csv:
-#         csv_writer = csv.writer(out_csv, delimiter=',')
-#         with open(in_filename) as in_csv:
-#             csv_reader = csv.reader(in_csv, delimiter=',')
-#             num_columns = 0
-#             for row in csv_reader:
-#                 row.pop()
-#                 if row[0][0:5] != 'Total':
-#                     if num_columns == 0:
-#                         num_columns = len(row)
-#                         logger.debug("Set row count to: " + str(num_columns))
-#                     elif len(row) > num_columns:
-#                         logger.debug("unshrunk row: " + str(row))
-#                         shrunk_row = shrink_animal_row(row, num_columns)
-#                         logger.debug("shrunk row: " + str(shrunk_row))
-#                     elif len(row) < num_columns:
-#                         logger.error("Row has too few columns!")
-#                         logger.error("row = " + str(row))
-#                         exit(1)
-#                     for pos in range(len(row)):
-#                         row[pos] = row[pos].strip()
-#                     logger.debug("writing row: " + str(row))
-#                     csv_writer.writerow(row)
-#     return out_filename
-#
-#
-# def shrink_animal_row(row, num_columns):
-#     """
-#
-#     :param row:
-#     :param num_columns:
-#     :return:
-#     """
-#     # how many extra rows?
-#     extra_row_count = len(row) - num_columns
-#     if extra_row_count > 0:
-#         remark = row[15] + " "
-#         for i in range(extra_row_count):
-#             remark += row.pop(16)
-#         row[8] = remark
-#     return row
-#
-#
-# def fix_event_file(in_filename, out_filename):
-#     """
-#
-#     :param in_filename:
-#     :param out_filename:
-#     :return:
-#     """
-#     with open(out_filename, "w+") as out_csv:
-#         csv_writer = csv.writer(out_csv, delimiter=',')
-#         with open(in_filename) as in_csv:
-#             csv_reader = csv.reader(in_csv, delimiter=',')
-#             num_columns = 0
-#             for row in csv_reader:
-#                 row.pop()
-#                 if num_columns == 0:
-#                     num_columns = len(row)
-#                     logger.debug("Set row count to: " + str(num_columns))
-#                 elif len(row) > num_columns:
-#                     logger.debug("unshrunk row: " + str(row))
-#                     shrunk_row = shrink_row(row, num_columns)
-#                     logger.debug("shrunk row: " + str(shrunk_row))
-#                 elif len(row) < num_columns:
-#                     logger.error("Row has too few columns!")
-#                     logger.error("row = " + str(row))
-#                     exit(1)
-#                 for pos in range(len(row)):
-#                     row[pos] = row[pos].strip()
-#                 logger.debug("writing row: " + str(row))
-#                 csv_writer.writerow(row)
-#     return out_filename
-#
-#
-# def shrink_row(row, num_columns):
-#     """
-#
-#     :param row:
-#     :param num_columns:
-#     :return:
-#     """
-#     # how many extra rows?
-#     extra_row_count = len(row) - num_columns
-#     if extra_row_count > 0:
-#         remark = row[8] + " "
-#         for i in range(extra_row_count):
-#             remark += row.pop(9)
-#         row[8] = remark
-#     return row

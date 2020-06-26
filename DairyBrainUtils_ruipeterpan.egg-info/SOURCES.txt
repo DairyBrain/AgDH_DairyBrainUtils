@@ -1,7 +1,0 @@
-README.md
-setup.py
-DairyBrainUtils/__init__.py
-DairyBrainUtils_ruipeterpan.egg-info/PKG-INFO
-DairyBrainUtils_ruipeterpan.egg-info/SOURCES.txt
-DairyBrainUtils_ruipeterpan.egg-info/dependency_links.txt
-DairyBrainUtils_ruipeterpan.egg-info/top_level.txt
