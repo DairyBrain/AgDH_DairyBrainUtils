@@ -50,7 +50,7 @@ def create_table_if_doesnt_exist(db_engine, table_name, sql_statement):
             try:
                 logger.info("Creating table " + table_name + " in " + db_engine.url.database + " database...")
                 logger.debug('create_temp_table_statement = ' + str(sql_statement.format(table_name)))
-                con.execute(text(sql_statement.format(table_name)))
+                con.execute(str(sql_statement.format(table_name)))
             except Exception as e:
                 print("The exception is " + str(e))
                 logger.error("Error creating the table " + table_name + " in " + db_engine.url.database + " database!")
@@ -75,12 +75,13 @@ def create_table(db_engine, table_name, sql_statement):
         try:
             logger.info("Creating table " + table_name + " in " + db_engine.url.database + " database...")
             logger.debug('create_temp_table_statement = ' + str(sql_statement.format(table_name)))
-            con.execute(text(sql_statement.format(table_name)))
+            con.execute(str(sql_statement.format(table_name)))
         except Exception as e:
             print("The exception is " + str(e))
             logger.error("Error creating the table " + table_name + " in " + db_engine.url.database + " database!")
             logger.error(e.args)
             exit(1)
+
 
 def create_schema(db_engine, schema_name):
     """
@@ -98,6 +99,50 @@ def create_schema(db_engine, schema_name):
             logger.error("Error creating the schema " + schema_name)
             logger.error(e.args)
             exit(1)
+
+
+def create_sequence(db_engine, sequence_name):
+    """
+    Creates a sequence in the database
+    :param db_engine: Specifies the connection to the database
+    :param sequence_name: Name of the sequence to be created
+    :return: None
+    """
+    with db_engine.connect() as con:
+        try:
+            logger.info("Creating sequence " + sequence_name)
+            con.execute(text("CREATE SEQUENCE IF NOT EXISTS " + sequence_name + ";"))
+        except Exception as e:
+            print("The exception is " + str(e))
+            logger.error("Error creating the sequence " + sequence_name)
+            logger.error(e.args)
+            exit(1)
+
+
+def get_next_from_sequence(db_engine, sequence_name):
+    """
+    Returns the next id in the given sequence (assuming one exists)
+    :param db_engine: Specifies the connection to the database
+    :param sequence_name: Name of the sequence to be created
+    :return: None
+    """
+    query_sequence_statement = text("SELECT nextval(\'" + sequence_name + "\');")
+
+    with db_engine.connect() as con:
+        try:
+            logger.info("Creating query_sequence_statement...")
+            # TODO: Check if the sequence exists
+            result = con.execute(query_sequence_statement)
+            row = result.fetchone()
+            if type(row[0]) is not int:
+                logger.error("Error getting an integer id from sequence!")
+                exit(1)
+            return row[0]
+        except Exception as e:
+            logger.error("Error creating query_sequence_statement!")
+            logger.error(e)
+            exit(1)
+
 
 def populate_table_from_csv(table_name, csv_location, db_engine):
     """
@@ -155,13 +200,13 @@ def drop_table(table_name, db_engine):
     """
     if has_table(table_name, db_engine):
         logger.debug("Deleting old (pre-existing) table: " + table_name + "...")
-        statement = "drop table if exists {};"
+        statement = str("DROP TABLE IF EXISTS {};")
 
         with db_engine.connect() as con:
             try:
                 con.execute(statement.format(table_name))
             except Exception as e:
-                logger.error("dc_event_import.drop_table(): Error deleting table " + table_name + " from database!")
+                logger.error("Error deleting table " + table_name + " from database!")
                 logger.error(e.args)
                 exit(1)
 
@@ -173,10 +218,7 @@ def has_table(table_name, db_engine):
     :param db_engine: Specifies the connection to the database
     :return: True if table with table_name is in the database, False otherwise
     """
-    return db_engine.has_table(table_name.split('.')[1], schema=table_name.split('.')[0])
-
-
-
-
-
-
+    if '.' in table_name:  # received schema.table_name
+        return db_engine.has_table(table_name.split('.')[1], schema=table_name.split('.')[0])
+    else:  # received plain table_name
+        return db_engine.has_table(table_name)

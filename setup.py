@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="DairyBrainUtils-ruipeterpan",
-    version="0.1.1",
+    version="0.3.0",
     author="Rui Pan",
     author_email="rpan33@wisc.edu",
     description="A set of functions that interacts with a database. It contains some basic functionalities along with some other Dairy-Brain-specific functionalities.",

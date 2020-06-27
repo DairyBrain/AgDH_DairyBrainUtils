@@ -18,7 +18,7 @@ To install the latest version of the package, use the command in [TestPyPI](http
 
 If the above link is broken, try:
 
-`pip3 install -i https://test.pypi.org/simple/ DairyBrainUtilities-ruipeterpan==0.1.1`
+`pip3 install -i https://test.pypi.org/simple/ DairyBrainUtilities-ruipeterpan==0.3.0`
 
 Once installed, we recommend you to import the package with `import DairyBrainUtils as dbu`.
 
@@ -31,11 +31,14 @@ A list of functions that are available for use are:
 * `get_engine(credentials)`
 * `create_table_if_doesnt_exist(db_engine, table_name, sql_statement)`
 * `create_table(db_engine, table_name, sql_statement)`
+* `create_schema(db_engine, schema_name)`
+* `create_sequence(db_engine, sequence_name)`
+* `get_next_from_sequence(db_engine, sequence_name)`
 * `populate_table_from_csv(table_name, csv_location, db_engine)`
 * `execute_statement(statement, db_engine)`
 * `drop_table(table_name, db_engine)`
 * `has_table(table_name, db_engine)`
-* `create_schema(db_engine, schema_name)`
+
 
 ####`get_engine(credentials)`
 Takes in a dictionary `credentials` with the keys: `[dialect, user, password, host, port, db_name, log]`, and passes these
@@ -59,6 +62,18 @@ Creates a table with table_name in the database.
 
 `sql_statement` is a `CREATE TABLE` statement that specifies the headers of the table to be created.
 
+####create_schema(db_engine, schema_name)
+
+Creates a schema with the given `schema_name` in the specified database.
+
+####create_sequence(db_engine, sequence_name)
+
+ Creates a sequence in the database.
+
+####get_next_from_sequence(db_engine, sequence_name)
+
+Returns the next integer id in the given sequence (assuming one exists)
+
 ####populate_table_from_csv(table_name, csv_location, db_engine)
 
 Takes in a `csv_location`, the file path of a csv file, and populates the table with the given `table_name` (assuming one exists) in the specified database.
@@ -75,9 +90,7 @@ Drops a table with `table_name` in the specified database.
 
 Returns `True` if there exists a table with the given `table_name` in the specified database, returns `False` otherwise
 
-####create_schema(db_engine, schema_name)
 
-Creates a schema with the given `schema_name` in the specified database.
 
 
 ## Development
