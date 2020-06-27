@@ -131,7 +131,7 @@ def get_next_from_sequence(db_engine, sequence_name):
     with db_engine.connect() as con:
         try:
             logger.info("Creating query_sequence_statement...")
-            # TODO: Check if the sequence exists
+            # Optional error checking here to check if the sequence exists
             result = con.execute(query_sequence_statement)
             row = result.fetchone()
             if type(row[0]) is not int:

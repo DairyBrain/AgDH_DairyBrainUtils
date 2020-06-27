@@ -18,7 +18,7 @@ To install the latest version of the package, use the command in [TestPyPI](http
 
 If the above link is broken, try:
 
-`pip3 install -i https://test.pypi.org/simple/ DairyBrainUtilities-ruipeterpan==0.3.1`
+`pip3 install -i https://test.pypi.org/simple/ DairyBrainUtils-ruipeterpan==0.3.2`
 
 Once installed, we recommend you to import the package with `import DairyBrainUtils as dbu`.
 
