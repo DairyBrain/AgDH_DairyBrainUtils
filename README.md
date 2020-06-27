@@ -18,11 +18,18 @@ To install the latest version of the package, use the command in [TestPyPI](http
 
 If the above link is broken, try:
 
-`pip3 install -i https://test.pypi.org/simple/ DairyBrainUtilities-ruipeterpan==0.3.0`
+`pip3 install -i https://test.pypi.org/simple/ DairyBrainUtilities-ruipeterpan==0.3.1`
 
 Once installed, we recommend you to import the package with `import DairyBrainUtils as dbu`.
 
+If you see an error message like this:
 
+```
+ERROR: Could not find a version that satisfies the requirement DairyBrainUtils-ruipeterpan==0.3.0 (from versions: 0.0.3, 0.0.4, 0.1.0, 0.1.1, 0.1.2, 0.1.3, 0.2.0, 0.2.1)
+ERROR: No matching distribution found for DairyBrainUtils-ruipeterpan==0.3.0
+```
+
+try installing it one more time. TestPyPI is weird.
 
 ## Documentation
 
