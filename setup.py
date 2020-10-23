@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="DairyBrainUtils-ruipeterpan",
+    name="DairyBrainUtils",
     version="0.3.2",
     author="Rui Pan",
     author_email="rpan33@wisc.edu",

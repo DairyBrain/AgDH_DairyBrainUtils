@@ -1,3 +1,5 @@
 api_token.txt
 
 ./archive/*
+
+.DS_Store

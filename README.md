@@ -14,15 +14,15 @@ DairyBrainUtils is a PyPI package with some basic functionalities for interactin
 For now, it is hosted on TestPyPI. If the TestPyPI distribution got cleaned up, please contact the author to re-upload it.
 
 ## Installation
-To install the latest version of the package, use the command in [TestPyPI](https://test.pypi.org/project/DairyBrainUtils-ruipeterpan/).
+To install the latest version of the package, use the command in [PyPI](https://pypi.org/project/DairyBrainUtils/0.3.2/). 
 
 If the above link is broken, try:
 
-`pip3 install -i https://test.pypi.org/simple/ DairyBrainUtils-ruipeterpan==0.3.2`
+`pip install DairyBrainUtils`
 
 Once installed, we recommend you to import the package with `import DairyBrainUtils as dbu`.
 
-If you see an error message like this:
+(Update: This was resolved as we uploaded to the official PyPI) If you see an error message like this:
 
 ```
 ERROR: Could not find a version that satisfies the requirement DairyBrainUtils-ruipeterpan==0.3.0 (from versions: 0.0.3, 0.0.4, 0.1.0, 0.1.1, 0.1.2, 0.1.3, 0.2.0, 0.2.1)
@@ -47,7 +47,7 @@ A list of functions that are available for use are:
 * `has_table(table_name, db_engine)`
 
 
-####`get_engine(credentials)`
+### `get_engine(credentials)`
 Takes in a dictionary `credentials` with the keys: `[dialect, user, password, host, port, db_name, log]`, and passes these
 credentials into [sqlalchemy.create_engine()](https://kite.com/python/docs/sqlalchemy.create_engine) to create a new engine instance.
 * `dialect`: String. A database dialect. Right now this package only supports `postgresql`.
@@ -58,42 +58,42 @@ credentials into [sqlalchemy.create_engine()](https://kite.com/python/docs/sqlal
 * `db_name`: String. A database name.
 * `log`: Boolean. If True, the engine will log all statements as well as a repr() of their parameter lists to the engines logger, which defaults to sys.stdout.
 
-####create_table_if_doesnt_exist(db_engine, table_name, sql_statement)
+### `create_table_if_doesnt_exist(db_engine, table_name, sql_statement)`
 Creates a table with `table_name` in the database if a table with the given name doesn't exist.
 
 `sql_statement` is a `CREATE TABLE` statement that specifies the headers of the table to be created.
 
-####create_table(db_engine, table_name, sql_statement)
+### `create_table(db_engine, table_name, sql_statement)`
 
 Creates a table with table_name in the database.
 
 `sql_statement` is a `CREATE TABLE` statement that specifies the headers of the table to be created.
 
-####create_schema(db_engine, schema_name)
+### `create_schema(db_engine, schema_name)`
 
 Creates a schema with the given `schema_name` in the specified database.
 
-####create_sequence(db_engine, sequence_name)
+### `create_sequence(db_engine, sequence_name)`
 
  Creates a sequence in the database.
 
-####get_next_from_sequence(db_engine, sequence_name)
+### `get_next_from_sequence(db_engine, sequence_name)`
 
 Returns the next integer id in the given sequence (assuming one exists)
 
-####populate_table_from_csv(table_name, csv_location, db_engine)
+### `populate_table_from_csv(table_name, csv_location, db_engine)`
 
 Takes in a `csv_location`, the file path of a csv file, and populates the table with the given `table_name` (assuming one exists) in the specified database.
 
-####execute_statement(statement, db_engine)
+### `execute_statement(statement, db_engine)`
 
 Executes a SQL statement in the specified database.
 
-####drop_table(table_name, db_engine)
+### `drop_table(table_name, db_engine)`
 
 Drops a table with `table_name` in the specified database.
 
-####has_table(table_name, db_engine)
+### `has_table(table_name, db_engine)`
 
 Returns `True` if there exists a table with the given `table_name` in the specified database, returns `False` otherwise
 
