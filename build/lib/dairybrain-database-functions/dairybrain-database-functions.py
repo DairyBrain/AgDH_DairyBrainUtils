@@ -1,9 +1,19 @@
 import csv
 import logging
 from sqlalchemy.sql import text
+from sqlalchemy_utils.functions import database_exists
 import ntpath
 
 logger = logging.getLogger(__name__)
+
+
+def check_if_database_exists(db_engine):
+    """
+    use existing sqlalchemy functionality to check if the database exists.
+    :param db_engine: Specifies the connection to the database
+    :return: True if database exists, False otherwise
+    """
+    return database_exists(db_engine.url)
 
 
 def create_table_if_doesnt_exist(db_engine, table_name, sql_statement):

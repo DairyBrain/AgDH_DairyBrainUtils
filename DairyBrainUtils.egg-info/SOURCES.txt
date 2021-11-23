@@ -1,7 +1,9 @@
+LICENSE
 README.md
 setup.py
 DairyBrainUtils/__init__.py
 DairyBrainUtils.egg-info/PKG-INFO
 DairyBrainUtils.egg-info/SOURCES.txt
 DairyBrainUtils.egg-info/dependency_links.txt
+DairyBrainUtils.egg-info/requires.txt
 DairyBrainUtils.egg-info/top_level.txt

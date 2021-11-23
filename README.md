@@ -36,6 +36,7 @@ try installing it one more time. TestPyPI is weird.
 A list of functions that are available for use are:
 
 * `get_engine(credentials)`
+* `check_if_database_exists(db_engine)`
 * `create_table_if_doesnt_exist(db_engine, table_name, sql_statement)`
 * `create_table(db_engine, table_name, sql_statement)`
 * `create_schema(db_engine, schema_name)`
@@ -57,6 +58,10 @@ credentials into [sqlalchemy.create_engine()](https://kite.com/python/docs/sqlal
 * `port`: Integer. Port number.
 * `db_name`: String. A database name.
 * `log`: Boolean. If True, the engine will log all statements as well as a repr() of their parameter lists to the engines logger, which defaults to sys.stdout.
+
+### `check_if_database_exists(db_engine)`
+Use existing sqlalchemy functionality to check if the database exists.
+Returns 'True' if database exists, 'False' otherwise
 
 ### `create_table_if_doesnt_exist(db_engine, table_name, sql_statement)`
 Creates a table with `table_name` in the database if a table with the given name doesn't exist.

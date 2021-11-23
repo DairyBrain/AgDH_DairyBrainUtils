@@ -5,10 +5,14 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="DairyBrainUtils",
-    version="0.3.2",
+    version="0.3.6",
     author="Rui Pan",
     author_email="rpan33@wisc.edu",
     description="A set of functions that interacts with a database. It contains some basic functionalities along with some other Dairy-Brain-specific functionalities.",
+    install_requires=[
+        'SQLAlchemy',
+        'sqlalchemy_utils'
+        ],
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/DairyBrain/AgDH_DairyBrainUtils",
