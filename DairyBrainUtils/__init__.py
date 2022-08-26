@@ -1,10 +1,11 @@
 import logging
 import sys
+import csv
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
-from sqlalchemy_utils.functions import database_exists
 
 logger = logging.getLogger(__name__)
+logger.setLevel('DEBUG')
 
 
 def get_engine(credentials):
@@ -32,15 +33,6 @@ def get_engine(credentials):
         logger.error("Can't connect to database: " + str(sys.exc_info()))
         sys.exit(1)
     return db_engine
-
-
-def check_if_database_exists(db_engine):
-    """
-    Use existing sqlalchemy functionality to check if the database exists.
-    :param db_engine: Specifies the connection to the database
-    :return: True if database exists, False otherwise
-    """
-    return database_exists(db_engine.url)
 
 
 def create_table_if_doesnt_exist(db_engine, table_name, sql_statement):
@@ -170,8 +162,10 @@ def populate_table_from_csv(table_name, csv_location, db_engine):
 
         # get the cursor
         cursor = connection.cursor()
+        #import pdb; pdb.set_trace()
 
         try:
+            cursor.execute('SET search_path TO dairy_comp, public')
             with open(csv_location, 'r') as f:
                 next(f)  # Skip the header row.
                 cursor.copy_from(f, table_name, sep=',', null='')
